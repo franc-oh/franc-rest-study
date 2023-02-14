@@ -3,14 +3,15 @@ package com.franc.events;
 import lombok.*;
 
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * Event 엔티티
  *   TODO : [INFO] 엔티티 생성 및 테스트
- *      1.필드선언 ('상태' 속성의 필드는 Enum 활용)
+ *      1.필드선언
+ *          - '상태' 속성의 필드는 Enum 활용
+ *          - @Enumerated(EnumType.STRING) 권장 => ORDINAL : idx 맵핑
  *      2. 테스트 코드 작성
  *          - builder test : 빌더로 객체가 만들어지는지 테스트
  *          - JavaBean test : 디폴트생성자 + getter/setter로 객체가 만들어지는지 테스트
@@ -26,9 +27,11 @@ import java.time.LocalDateTime;
  *
  */
 
+@Entity
 @NoArgsConstructor @AllArgsConstructor
 @Builder @Getter @Setter
 public class Event {
+    @Id @GeneratedValue
     private Integer id;
     private String name;
     private String description;
@@ -45,5 +48,5 @@ public class Event {
     private boolean free;
 
     @Enumerated(EnumType.STRING)
-    private EventStatus eventStatus = EventStatus.DRAFT;
+    private EventStatus eventStatus;
 }
